@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Country Api</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="https://kit.fontawesome.com/048d59723e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container side-by-side">
+            <a href="#" class="header__logo" onclick="location.reload()">where in the world ?</a>
+            <div class="header__mode">
+                <input type="checkbox" class="checkbox" id="mode" />
+                <label for="mode" class="mode-label" onclick="toggleMode()">
+                    <i class="fas fa-moon dark"></i>
+                    <i class="fas fa-lightbulb light"></i>
+                </label>
+            </div>
+        </div>
+    </header>
+    <section class="search-section">
+        <div class="container side-by-side">
+            <div class="search">
+                <i class="fas fa-search search__icon"></i>
+                <input type="text" class="search__input" placeholder="Search for a country" />
+            </div>
+            <div class="filter">
+                <div class="filter__text">
+                    <span>
+                        Filter by Region
+                    </span>
+                    <i class="fas fa-chevron-down down filter__icon" onclick="showItem()"></i>
+                </div>
+                <ul class="filter__values hide">
+                    <li class="filter__item " data-region="All">All</li>
+                    <li class="filter__item " data-region="Africa">Africa</li>
+                    <li class="filter__item " data-region="Americas">Americas</li>
+                    <li class="filter__item " data-region="Asia">Asia</li>
+                    <li class="filter__item " data-region="Europe">Europe</li>
+                    <li class="filter__item " data-region="Oceania">Oceania</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="countries-section">
+        <div class="container">
+            <div class="countries__container">
+                <!-- <div class="country-box">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/800px-Flag_of_Tunisia.svg.png"
+                        alt="flag" class="country__flag">
+                    <div class="country__info">
+                        <div class="country__name">Tunisia</div>
+                        <div class="country__population">Population : <span>11.874.555</span></div>
+                        <div class="country__region">Region : <span>Africa</span></div>
+                        <div class="country__capital">Capital : <span>Tunis</span></div>
+                    </div>
+                </div> -->
+
+
+            </div>
+        </div>
+    </section>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
