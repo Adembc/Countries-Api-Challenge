@@ -10,6 +10,7 @@ const header = document.querySelector(".header");
 const filterItems = document.querySelectorAll(".filter__item");
 const currentFilter = document.querySelector(".filter__text span");
 const searchInput = document.querySelector(".search__input");
+const toTopBtn = document.querySelector("#to-top") ; 
 
 // dark / light Mode
 function toggleMode() {
@@ -32,6 +33,25 @@ function showItem() {
     regionContainer.style.setProperty("--list-height", `0px`);
   }
 }
+
+
+// to top button 
+
+  window.onscroll = ()=>{
+    if(this.scrollY >=1000){
+        toTopBtn.classList.remove("hide");
+    }else{
+        toTopBtn.classList.add("hide");
+    }
+  }
+  function scrollToTop(){
+    window.scrollTo({
+      left:0 , top:0, behavior:"smooth"
+  })
+}
+    
+
+
 // Get Data from api
 
 fetch("https://restcountries.com/v3.1/all")
@@ -71,54 +91,100 @@ fetch("https://restcountries.com/v3.1/all")
       countriesContainer.insertAdjacentHTML("beforeend", html);
     });
     const countries = document.querySelectorAll(".country-box");
-    filterAndShow([...countries]);
-    searchAndShow([...countries]);
-  });
+    filter([...countries]);
+    // search([...countries]);
+    
+  }); 
+function filter(countries){
+  let filtredByRegion;
+  let filtredBySearch;
 
-function filterAndShow(countries) {
-  let region;
+
+  // filter by region 
   filterItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      region = item.dataset.region;
-      currentFilter.textContent = region;
+        item.addEventListener("click", () => {
+          region = item.dataset.region;
+          currentFilter.textContent = region;
+    
+          // close List
+          showBtn.classList.remove("open");
+          regionContainer.classList.add("hide");
+          regionContainer.style.setProperty("--list-height", `0px`);
+          // Filter
+          filtredByRegion =  countries.filter((c)=>  c.dataset.region == region || region=="All")
+          show(countries , filtredByRegion,filtredBySearch ?? filtredByRegion)
+        })
+    
+})
 
-      // close List
-      showBtn.classList.remove("open");
-      regionContainer.classList.add("hide");
-      regionContainer.style.setProperty("--list-height", `0px`);
-      // SEARCH
-
-      // filter
-      countries.forEach((c) => {
-        if (c.dataset.region == region || region == "All") {
-          c.classList.remove("hide");
-        } else {
-          c.classList.add("hide");
-        }
-      });
-    });
-  });
+// filter by search
+searchInput.addEventListener("input",()=>{
+  if(searchInput.value.length> 0){
+    filtredBySearch  =  countries.filter((c)=> c.dataset.country.toLowerCase().includes(searchInput.value.toLowerCase()))
+  }else{
+    filtredBySearch = countries ; 
+  }
+  show(countries , filtredByRegion ?? filtredBySearch,filtredBySearch)
+})
 }
 
-function searchAndShow(countries) {
-  const filtredCountries = countries.filter(
-    (c) => !c.classList.contains("hide")
-  );
-  searchInput.addEventListener("input", (e) => {
-    filtredCountries.forEach((c) => {
-      if (e.currentTarget.value.length >= 1) {
-        if (
-          !c.dataset.country
-            .toLowerCase()
-            .includes(e.currentTarget.value.toLowerCase())
-        ) {
-          c.classList.add("hide");
-        } else {
-          c.classList.remove("hide");
-        }
-      } else {
-        c.classList.remove("hide");
-      }
-    });
-  });
+
+function show(countries,arr1,arr2){
+   countries.forEach((c)=> arr2.indexOf(c) == -1 || arr1.indexOf(c) == -1 ? c.classList.add("hide") : c.classList.remove("hide") ) ; 
 }
+
+
+/*
+
+
+First Try 
+
+// function filterAndShow(countries) {
+//   let region;
+//   filterItems.forEach((item) => {
+//     item.addEventListener("click", () => {
+//       region = item.dataset.region;
+//       currentFilter.textContent = region;
+
+//       // close List
+//       showBtn.classList.remove("open");
+//       regionContainer.classList.add("hide");
+//       regionContainer.style.setProperty("--list-height", `0px`);
+//       // SEARCH
+
+//       // filter
+//       countries.forEach((c) => {
+//         if (c.dataset.region == region || region == "All") {
+//           c.classList.remove("hide");
+//         } else {
+//           c.classList.add("hide");
+//         }
+//       });
+//     });
+//   });
+// }
+
+// function searchAndShow(countries) {
+//   const filtredCountries = countries.filter(
+//     (c) => !c.classList.contains("hide")
+//   );
+//   searchInput.addEventListener("input", (e) => {
+//     filtredCountries.forEach((c) => {
+//       if (e.currentTarget.value.length >= 1) {
+//         if (
+//           !c.dataset.country
+//             .toLowerCase()
+//             .includes(e.currentTarget.value.toLowerCase())
+//         ) {
+//           c.classList.add("hide");
+//         } else {
+//           c.classList.remove("hide");
+//         }
+//       } else {
+//         c.classList.remove("hide");
+//       }
+//     });
+//   });
+// }
+
+*/

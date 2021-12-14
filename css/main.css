@@ -297,3 +297,37 @@ a {
   font-size: 18px;
 }
 /*  End countries-section */
+
+/* to top */ 
+
+#to-top{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+ display: grid;
+ place-items: center;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: none;
+  cursor: pointer;
+  transition:  opacity .3s;
+  animation: updown 1.3s ease-in infinite;
+}
+#to-top.hide{
+  opacity: 0;
+  visibility: hidden;
+}
+#to-top i {
+  font-size: 22px;
+  color: var(--black  );
+}
+@keyframes updown{
+  50%{
+    transform: translateY(-10px);
+  }
+  100%{
+    transform: translateY(0);
+  }
+}
